@@ -7,15 +7,20 @@
 
 //********** Global Variables **********//
 
-char state = 'B';                           // A = Unpressed, B = Pressed - attempted checker pattern, buttons Q + E
+char state = 'A';                           // A = Unpressed, B = Pressed - attempted checker pattern, buttons Q + E
 boolean isAltPressed = false;               // Checks if alt is pressed, for keybindings
 
 PImage img;
 float dotSize = 2;                          //default dot size = 2 px
-float scale = 2;                            //depreciated
+float scale = 2;                            //default: 2x
 int incr = 4;                               // distance (in px) between centers, default: 4 px
 int e = 2;                                  // constrain for top output radius
-int Count, xCount, yCount;
+int Count, xCount, yCount;                  // for calculating, and displaying
+int cCount = 0;
+
+//For importing images
+boolean fileSelected;
+String path;
 
 //********** Setup **********//
 
@@ -24,9 +29,7 @@ void setup() {
   surface.setResizable(true);
 
   img = loadImage("Mountain.jpg");
-  img.get();
   ellipseMode(CENTER);
-
   noStroke();
 }
 
@@ -36,48 +39,54 @@ void draw() {
   background(255);
   fill(0, 0, 225);                          //the circles are blue
 
+  if (fileSelected) 
+  {
+    img = loadImage(path);
+    fileSelected = false;
+  }
+
   if (img != null) {
-    surface.setSize(2*img.width, 2*img.height);
+    surface.setSize(int(scale)*img.width, int(scale)*img.height);
     for (int y = 0; y < img.height; y += incr) {
       for (int x = 0; x < img.width; x += incr) {
         float val = (red(img.get(x, y)) + green(img.get(x, y)) + blue(img.get(x, y)))/3;
         float s = map(val, 0, 255, 1, e*scale);         //'s' is the individual radii of each circle in the array, ranging from "1" to "e"
 
-        if (state == 'A') {       
-          if ((x+y)%2==0) {                   //if checkered is on, and x + y is even
+        if (state == 'B') {       
+          if (((x+y)/incr)%2==0) {                   //if checkered is on, and x + y is even
             ellipse(x*scale, y*scale, s*dotSize, s*dotSize);
+            cCount += 1;
           }
         }
-        if (state == 'B') {
+        if (state == 'A') {
           ellipse(x*scale, y*scale, s*dotSize, s*dotSize);
+          cCount += 1;
         }
       }
     }
   }
 
-//********** Show Element Count **********//
-    
-    xCount = ceil(float(img.width)/float(incr));
-    yCount = ceil(float(img.height)/float(incr));
-    Count = xCount * yCount;
-    
-    println("x count = " + xCount);
-    println("y count = " + yCount);
-    println("element count = " + Count);
-    
-  textAlign(LEFT, TOP);
-  textSize(40);
-  fill(255, 150);
+  //********** Show Element Count **********//
 
-  rect(0, 10, 2*img.width, 50);
+  xCount = ceil(float(img.width)/float(incr));
+  yCount = ceil(float(img.height)/float(incr));
+
+  textAlign(LEFT, TOP);
+  textSize(20);
+  fill(255, 200);
+
+  rect(0, 10, 2*img.width, 90);
 
   fill(0);
-  text(Count + " elements, " + xCount + " xpx, " + yCount + " ypx.", 10, 10);
+  text(cCount + " elements,\n" + xCount + " x Columns,\n" + yCount + " y Rows.", 10, 10);
+  noLoop();
 }
 
 //********** Key Bindings **********//
 
 void keyPressed() {
+  cCount = 0;
+  loop();
   switch(keyCode) {
   case UP:
     scale *= 1.0;                            //default 1.2
@@ -101,6 +110,11 @@ void keyPressed() {
     break;
   }  
   switch(key) {
+
+    case('l'):              //"l" to load a new file!
+    //case('L'):              //or "L" //only matters if holding shift actually
+    selectInput("Select a file to process:", "fileSelected");
+    break;
 
     case('w'):              //"w" increases radius of circles
     dotSize+=0.3;  
@@ -128,8 +142,16 @@ void keyPressed() {
     delay(1500);            //holds for 1.5 secs before closing
     exit();
     break;
+
+    case('e'):
+    state = 'A';
+    break;
+
+    case('q'):
+    state = 'B';
+    break;
   }
-  
+
   if (keyCode == ALT && isAltPressed == false) isAltPressed = true;
 }
 
@@ -139,10 +161,20 @@ void keyReleased() {
 
 //********** Functions **********//
 
+void fileSelected(File selection) 
+{
+  if (selection != null) 
+  {
+    path = selection.getAbsolutePath();
+    fileSelected = true;
+    println("User selected " + selection.getAbsolutePath());
+  }
+}
+
 void export(String kind) {
 
   println("generating pattern ... ");
-  
+
   if (kind == "dxf") {
     dxfHeader();
 
@@ -161,10 +193,10 @@ void export(String kind) {
 
   if (kind == "svg") {
     //svgHeader();
-    
+
     //loop this:
     //svgEllipse(int cx, int cy, int rx, int ry)
-    
+
     //svgEnd();
     println("exporting svg ... ");
     //saveXML(expSVG, "export.svg");
