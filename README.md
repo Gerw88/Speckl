@@ -1,6 +1,8 @@
 # Two Bit Patterner
 Bitmap Image Sampler Project in Processing - to create vector files for engraving and routing
 
+##Latest Release
+~~link~~, .PDE file for Processing, version 0.1, released October 13th, 2015
 
 ### Current key bindings:
 
