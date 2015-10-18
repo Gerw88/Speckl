@@ -1,22 +1,26 @@
 ///////////////////////////////////////////////////////////////////////////////////
 //                                                                               //
 //                                                                               //
+//                             by Gerard Walsh 2015                              //
 //                                                                               //
 ///////////////////////////////////////////////////////////////////////////////////
 
-//import processing.svg.*;
-//import processing.dxf.*;                     //library for exporting dxfs (will update with SVG library soon...)
+//********** Global Variables **********//
 
-char state = 'B';                            // A = Unpressed, B = Pressed - attempted checker pattern, buttons Q + E
+char state = 'B';                           // A = Unpressed, B = Pressed - attempted checker pattern, buttons Q + E
+boolean isAltPressed = false;               // Checks if alt is pressed, for keybindings
 
 PImage img;
 float dotSize = 2;                          //default dot size = 2 px
 float scale = 2;                            //depreciated
-int incr = 4;                               // distance (in px) between centres
+int incr = 4;                               // distance (in px) between centers, default: 4 px
 int e = 2;                                  // constrain for top output radius
+int Count, xCount, yCount;
+
+//********** Setup **********//
 
 void setup() {
-  size(1190, 790, P3D);                      //start at image size
+  size(1200, 800, P3D);                      //start at image size
   surface.setResizable(true);
 
   img = loadImage("Mountain.jpg");
@@ -26,9 +30,11 @@ void setup() {
   noStroke();
 }
 
+//********** Draw **********//
+
 void draw() {
   background(255);
-  fill(0, 0, 225);  //the circles are blue
+  fill(0, 0, 225);                          //the circles are blue
 
   if (img != null) {
     surface.setSize(2*img.width, 2*img.height);
@@ -38,18 +44,38 @@ void draw() {
         float s = map(val, 0, 255, 1, e*scale);         //'s' is the individual radii of each circle in the array, ranging from "1" to "e"
 
         if (state == 'A') {       
-          if ((x+y)%2==0) {                                    //if checkered is on, and x + y is even
+          if ((x+y)%2==0) {                   //if checkered is on, and x + y is even
             ellipse(x*scale, y*scale, s*dotSize, s*dotSize);
           }
         }
-        if (state == 'B') { 
-          //        fill(0);
+        if (state == 'B') {
           ellipse(x*scale, y*scale, s*dotSize, s*dotSize);
         }
       }
     }
   }
+
+//********** Show Element Count **********//
+    
+    xCount = ceil(float(img.width)/float(incr));
+    yCount = ceil(float(img.height)/float(incr));
+    Count = xCount * yCount;
+    
+    println("x count = " + xCount);
+    println("y count = " + yCount);
+    println("element count = " + Count);
+    
+  textAlign(LEFT, TOP);
+  textSize(40);
+  fill(255, 150);
+
+  rect(0, 10, 2*img.width, 50);
+
+  fill(0);
+  text(Count + " elements, " + xCount + " xpx, " + yCount + " ypx.", 10, 10);
 }
+
+//********** Key Bindings **********//
 
 void keyPressed() {
   switch(keyCode) {
@@ -66,6 +92,7 @@ void keyPressed() {
   case RIGHT:
     incr+=1;
     incr = constrain(incr, 1, 100000);
+
     break;
 
   case LEFT:
@@ -95,62 +122,56 @@ void keyPressed() {
     e = constrain(e, 1, 100000);
     break;
 
-    case('x'):              //"x" to export
-    export("output.dxf", "dxf");
-    delay(1500);            //holds for 1.5 secs before closing
-    exit();
-    break;
-
-    case('z'):              //"z" to export dxf
-    expor();
+    case('x'):              //"x" to export dxf, "alt + x" to export svg
+    if (isAltPressed == false) export("dxf");
+    if (isAltPressed == true) export("svg");
     delay(1500);            //holds for 1.5 secs before closing
     exit();
     break;
   }
+  
+  if (keyCode == ALT && isAltPressed == false) isAltPressed = true;
 }
 
-void export(String f, String kind) {
+void keyReleased() {
+  if (keyCode == ALT) isAltPressed = false;
+}
+
+//********** Functions **********//
+
+void export(String kind) {
+
+  println("generating pattern ... ");
+  
   if (kind == "dxf") {
-    println("generating pattern ... ");  
-    beginRaw(DXF, f);
+    dxfHeader();
 
-    noFill();
-    stroke(0);
-
-    for (int y=0; y<img.height; y+=incr) {
-      for (int x=0; x<img.width; x+=incr) {
-        float val = (red(img.get(x, y)) + green(img.get(x, y)) + blue(img.get(x, y)))/3;        // average of RGB values
-        float s = map(val, 0, 255, 1, e*scale);                                              //'s' is the individual radii of each circle in the array, ranging from "1" to "e"
-        ellipse(x*scale, y*scale, s*dotSize, s*dotSize );
+    for (int y = 0; y < img.height; y += incr) {
+      for (int x = 0; x < img.width; x += incr) {
+        float val = (red(img.get(x, y))+green(img.get(x, y)) + blue(img.get(x, y)))/3;
+        float s = map(val, 0, 255, 1, e*scale);
+        dxfCircle(x*scale, y*scale, 1, 1, s*dotSize, "Layer 1");
       }
     }
+    dxfEnd();
 
-    endRaw();                                                                               // stop and save dxf
-    dispose();
-    println("... done exporting.");
+    println("exporting dxf ... ");
+    saveStrings("export2.dxf", expDxf);
   }
 
-  //
-  //if (kind == "svg") {
-  //
-  //}
-}
-
-void expor() {
-  dxfHeader();
-
-  for (int y = 0; y < img.height; y += incr) {
-    for (int x = 0; x < img.width; x += incr) {
-      float val = (red(img.get(x, y))+green(img.get(x, y)) + blue(img.get(x, y)))/3;
-      float s = map(val, 0, 255, 1, e*scale);
-      dxfCircle(x*scale, y*scale, 1, 1, s*dotSize, "Layer 1");
-    }
+  if (kind == "svg") {
+    //svgHeader();
+    
+    //loop this:
+    //svgEllipse(int cx, int cy, int rx, int ry)
+    
+    //svgEnd();
+    println("exporting svg ... ");
+    //saveXML(expSVG, "export.svg");
   }
-  dxfEnd();
 
-  saveStrings("export2.dxf", expDxf);
+  println("... done exporting.");
 }
-
 
 
 void delay(int delay)
