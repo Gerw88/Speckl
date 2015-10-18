@@ -9,4 +9,5 @@ Bitmap Image Sampler Project in Processing - to create vector files for engravin
 - A / D             Increas/Decrease 
 - W / S             Increase/Decrease mapping constraint on 
 - Q                 Toggle Checker Mode
-- ~~X~~ (Z)             Export & Quit
+- X                 Export DXF & Quit
+- Alt + X           Export SVG & Quit
