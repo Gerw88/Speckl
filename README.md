@@ -4,6 +4,10 @@ Bitmap Image Sampler Project in Processing - to create vector files for engravin
 ###Latest Release
 ~~link~~, .PDE file for Processing 3.0, version 0.1 released October 00th, 2015
 
+###Compatible Formats:
+**Input:** .gif, .jpg, .tga, and .png
+**Output:** .dxf, and .svg
+
 ###Current key bindings:
 
 - Up/Down           Scale (*currently disabled, all images will be rendered on screen at 1:1*)
