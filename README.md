@@ -2,7 +2,7 @@
 developed in Processing language- to create vector files for engraving and routing, originally conceived as a simple complementary script to work with [Lasersaur](http://www.lasersaur.com/) machines and the Lasersaur App, but would no doubt have applications in routing, cutting and other digital fabrication 
 
 ###Latest Release
-[Speckl v0.1 for Mac](https://github.com/Gerw88/Speckl/releases/tag/v0.1), .PDE file for Processing 3.0, released October 19th, 2015
+[Speckl v0.1](https://github.com/Gerw88/Speckl/releases/tag/v0.1), developed in Processing 3.0, released October 19th, 2015
 
 ###Compatible Formats:
 **Input:** .gif, .jpg, .tga, and .png </br>
