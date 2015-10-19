@@ -14,7 +14,7 @@ Bitmap Image Sampler Project in Processing - to create vector files for engravin
 - Left/Right&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Increase/Decrease Spacing
 - A / D&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Increas/Decrease 
 - W / S&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Increase/Decrease mapping constraint on circle radii
-- Q / E / R&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Checker Mode/Normal/Linear Mode
+- Q / E / R&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Checker Mode/Normal/Linear Mode
 - X&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Export DXF & Quit
 - Alt + X&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Export SVG & Quit
 - L&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Load new file
