@@ -5,7 +5,7 @@ Bitmap Image Sampler Project in Processing - to create vector files for engravin
 ~~link~~, .PDE file for Processing 3.0, version 0.1 released October 00th, 2015
 
 ###Compatible Formats:
-**Input:** .gif, .jpg, .tga, and .png
+**Input:** .gif, .jpg, .tga, and .png </br>
 **Output:** .dxf, and .svg
 
 ###Current key bindings:
