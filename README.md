@@ -10,11 +10,11 @@ Bitmap Image Sampler Project in Processing - to create vector files for engravin
 
 ###Current key bindings:
 
-- ~~Up/Down           Scale~~ (*currently disabled, all images will be rendered on screen at 1:1*)
-- Left/Right        Increase/Decrease Spacing
-- A / D             Increas/Decrease 
-- W / S             Increase/Decrease mapping constraint on circle radii
-- Q / E / R         Checker Mode/Normal/Linear Mode
-- X                 Export DXF & Quit
-- Alt + X           Export SVG & Quit
-- L                 Load new file
+- ~~Up/Down&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Scale~~ (*currently disabled, all images will be rendered on screen at 1:1*)
+- Left/Right&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Increase/Decrease Spacing
+- A / D&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Increas/Decrease 
+- W / S&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Increase/Decrease mapping constraint on circle radii
+- Q / E / R&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Checker Mode/Normal/Linear Mode
+- X&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Export DXF & Quit
+- Alt + X&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Export SVG & Quit
+- L&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Load new file
